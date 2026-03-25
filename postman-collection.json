@@ -1,0 +1,307 @@
+{
+  "info": {
+    "name": "MediTrack API Collection",
+    "description": "API collection for MediTrack Healthcare Platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "User Service",
+      "item": [
+        {
+          "name": "Register Doctor",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8081/api/users/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"doctor@meditrack.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"Dr. Ahmad\",\n  \"lastName\": \"Wijaya\",\n  \"phoneNumber\": \"081234567890\",\n  \"role\": \"DOCTOR\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Register Patient",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8081/api/users/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"patient@meditrack.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"Budi\",\n  \"lastName\": \"Santoso\",\n  \"phoneNumber\": \"081234567891\",\n  \"role\": \"PATIENT\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8081/api/users/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"doctor@meditrack.com\",\n  \"password\": \"password123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8081/api/users/1"
+          }
+        },
+        {
+          "name": "List All Doctors",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8081/api/users/role/DOCTOR"
+          }
+        },
+        {
+          "name": "List All Patients",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8081/api/users/role/PATIENT"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Appointment Service",
+      "item": [
+        {
+          "name": "Book Appointment",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8082/api/appointments",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patientId\": 2,\n  \"doctorId\": 1,\n  \"appointmentDateTime\": \"2026-04-01T10:00:00\",\n  \"durationMinutes\": 30,\n  \"type\": \"CONSULTATION\",\n  \"reasonForVisit\": \"Regular checkup\",\n  \"symptoms\": \"Mild headache\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Appointment by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8082/api/appointments/1"
+          }
+        },
+        {
+          "name": "Get Appointments by Patient",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8082/api/appointments/patient/2"
+          }
+        },
+        {
+          "name": "Get Appointments by Doctor",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8082/api/appointments/doctor/1"
+          }
+        },
+        {
+          "name": "Reschedule Appointment",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8082/api/appointments/1/reschedule",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"newAppointmentDateTime\": \"2026-04-01T14:00:00\",\n  \"reason\": \"Patient requested different time\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Appointment",
+          "request": {
+            "method": "DELETE",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8082/api/appointments/1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Patient is not available\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Update Appointment Status",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8082/api/appointments/1/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"COMPLETED\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Appointments by Status",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8082/api/appointments/status/SCHEDULED"
+          }
+        }
+      ]
+    },
+    {
+      "name": "EHR Service",
+      "item": [
+        {
+          "name": "Medical Records",
+          "item": [
+            {
+              "name": "Create Medical Record",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8083/api/ehr/records",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"patientId\": 2,\n  \"doctorId\": 1,\n  \"appointmentId\": 1,\n  \"visitDate\": \"2026-03-25T10:30:00\",\n  \"chiefComplaint\": \"Headache and fever\",\n  \"diagnosis\": \"Viral infection\",\n  \"treatmentPlan\": \"Rest and medication\",\n  \"notes\": \"Patient reports symptoms for 2 days\",\n  \"temperature\": 38.5,\n  \"bloodPressureSystolic\": 120,\n  \"bloodPressureDiastolic\": 80,\n  \"heartRate\": 75,\n  \"respiratoryRate\": 16,\n  \"weight\": 70.5,\n  \"height\": 175.0,\n  \"oxygenSaturation\": 98\n}"
+                }
+              }
+            },
+            {
+              "name": "Get Medical Record by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/records/1"
+              }
+            },
+            {
+              "name": "Get Patient Medical History",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/records/patient/2"
+              }
+            },
+            {
+              "name": "Get Doctor's Medical Records",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/records/doctor/1"
+              }
+            },
+            {
+              "name": "Update Medical Record",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8083/api/ehr/records/1",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"patientId\": 2,\n  \"doctorId\": 1,\n  \"chiefComplaint\": \"Headache and fever - Updated\",\n  \"diagnosis\": \"Viral infection with mild dehydration\",\n  \"treatmentPlan\": \"Rest, medication, and increase fluid intake\",\n  \"notes\": \"Patient condition improving\"\n}"
+                }
+              }
+            },
+            {
+              "name": "Finalize Medical Record",
+              "request": {
+                "method": "PUT",
+                "url": "http://localhost:8083/api/ehr/records/1/finalize"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Prescriptions",
+          "item": [
+            {
+              "name": "Create Prescription",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8083/api/ehr/prescriptions",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"patientId\": 2,\n  \"doctorId\": 1,\n  \"medicalRecordId\": 1,\n  \"issueDate\": \"2026-03-25\",\n  \"validityDays\": 30,\n  \"notes\": \"Take with food\",\n  \"items\": [\n    {\n      \"medicineName\": \"Paracetamol\",\n      \"dosage\": \"500mg\",\n      \"frequency\": \"3 times daily\",\n      \"durationDays\": 5,\n      \"instructions\": \"Take after meals\",\n      \"quantity\": 15\n    },\n    {\n      \"medicineName\": \"Vitamin C\",\n      \"dosage\": \"1000mg\",\n      \"frequency\": \"Once daily\",\n      \"durationDays\": 7,\n      \"instructions\": \"Take in the morning\",\n      \"quantity\": 7\n    }\n  ]\n}"
+                }
+              }
+            },
+            {
+              "name": "Get Prescription by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/prescriptions/1"
+              }
+            },
+            {
+              "name": "Get Prescription by Number",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/prescriptions/number/RX-A1B2C3D4"
+              }
+            },
+            {
+              "name": "Get Patient Prescriptions",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/prescriptions/patient/2"
+              }
+            },
+            {
+              "name": "Update Prescription Status",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8083/api/ehr/prescriptions/1/status",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"DISPENSED\"\n}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Lab Results",
+          "item": [
+            {
+              "name": "Create Lab Result",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8083/api/ehr/lab-results",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"patientId\": 2,\n  \"doctorId\": 1,\n  \"medicalRecordId\": 1,\n  \"testName\": \"Complete Blood Count\",\n  \"testType\": \"Hematology\",\n  \"testDate\": \"2026-03-25\",\n  \"resultDate\": \"2026-03-26\",\n  \"result\": \"WBC: 8.5, RBC: 4.8, Hemoglobin: 14.2\",\n  \"normalRange\": \"WBC: 4-11, RBC: 4.5-5.5, Hb: 13-17\",\n  \"unit\": \"10^9/L\",\n  \"labName\": \"MediLab\",\n  \"technician\": \"John Lab Tech\",\n  \"notes\": \"All values within normal range\"\n}"
+                }
+              }
+            },
+            {
+              "name": "Get Lab Result by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/lab-results/1"
+              }
+            },
+            {
+              "name": "Get Patient Lab Results",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8083/api/ehr/lab-results/patient/2"
+              }
+            },
+            {
+              "name": "Update Lab Result Status",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8083/api/ehr/lab-results/1/status",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"VERIFIED\"\n}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

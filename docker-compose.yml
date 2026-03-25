@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Databases
+  user-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: user_db
+      POSTGRES_USER: meditrack
+      POSTGRES_PASSWORD: meditrack123
+    ports:
+      - "5432:5432"
+    volumes:
+      - user-db-data:/var/lib/postgresql/data
+
+  appointment-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: appointment_db
+      POSTGRES_USER: meditrack
+      POSTGRES_PASSWORD: meditrack123
+    ports:
+      - "5433:5432"
+    volumes:
+      - appointment-db-data:/var/lib/postgresql/data
+
+  ehr-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: ehr_db
+      POSTGRES_USER: meditrack
+      POSTGRES_PASSWORD: meditrack123
+    ports:
+      - "5434:5432"
+    volumes:
+      - ehr-db-data:/var/lib/postgresql/data
+
+  pharmacy-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: pharmacy_db
+      POSTGRES_USER: meditrack
+      POSTGRES_PASSWORD: meditrack123
+    ports:
+      - "5435:5432"
+    volumes:
+      - pharmacy-db-data:/var/lib/postgresql/data
+
+  payment-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: payment_db
+      POSTGRES_USER: meditrack
+      POSTGRES_PASSWORD: meditrack123
+    ports:
+      - "5436:5432"
+    volumes:
+      - payment-db-data:/var/lib/postgresql/data
+
+  analytics-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: analytics_db
+      POSTGRES_USER: meditrack
+      POSTGRES_PASSWORD: meditrack123
+    ports:
+      - "5437:5432"
+    volumes:
+      - analytics-db-data:/var/lib/postgresql/data
+
+  # Redis Cache
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+
+  # RabbitMQ Message Broker
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: meditrack
+      RABBITMQ_DEFAULT_PASS: meditrack123
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+
+volumes:
+  user-db-data:
+  appointment-db-data:
+  ehr-db-data:
+  pharmacy-db-data:
+  payment-db-data:
+  analytics-db-data:
+  redis-data:
+  rabbitmq-data:

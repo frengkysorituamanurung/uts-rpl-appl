@@ -1,0 +1,18 @@
+package com.meditrack.pharmacy.model;
+
+public enum MedicineCategory {
+    ANTIBIOTIC,
+    ANALGESIC,
+    ANTIPYRETIC,
+    ANTIVIRAL,
+    ANTIFUNGAL,
+    ANTIHISTAMINE,
+    CARDIOVASCULAR,
+    DIABETES,
+    GASTROINTESTINAL,
+    RESPIRATORY,
+    VITAMIN_SUPPLEMENT,
+    DERMATOLOGICAL,
+    NEUROLOGICAL,
+    OTHER
+}
