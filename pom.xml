@@ -30,15 +30,12 @@
 
     <modules>
         <module>service-registry</module>
-        <module>config-server</module>
-        <module>api-gateway</module>
         <module>user-service</module>
         <module>appointment-service</module>
         <module>ehr-service</module>
         <module>pharmacy-service</module>
         <module>analytics-service</module>
         <module>payment-service</module>
-        <module>notification-service</module>
         <module>common-lib</module>
     </modules>
 

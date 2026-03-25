@@ -302,6 +302,293 @@
           ]
         }
       ]
+    },
+    {
+      "name": "Pharmacy Service",
+      "item": [
+        {
+          "name": "Medicines",
+          "item": [
+            {
+              "name": "Create Medicine",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8084/api/pharmacy/medicines",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Paracetamol\",\n  \"description\": \"Pain reliever and fever reducer\",\n  \"manufacturer\": \"PharmaCorp\",\n  \"category\": \"ANALGESIC\",\n  \"dosageForm\": \"Tablet\",\n  \"strength\": \"500mg\",\n  \"price\": 5000,\n  \"stockQuantity\": 100,\n  \"reorderLevel\": 20,\n  \"expiryDate\": \"2027-12-31\",\n  \"requiresPrescription\": false,\n  \"storageConditions\": \"Store at room temperature\",\n  \"sideEffects\": \"Nausea, allergic reactions\"\n}"
+                }
+              }
+            },
+            {
+              "name": "Get Medicine by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/medicines/1"
+              }
+            },
+            {
+              "name": "Get Medicine by Code",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/medicines/code/MED-A1B2C3D4"
+              }
+            },
+            {
+              "name": "Get All Medicines",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/medicines"
+              }
+            },
+            {
+              "name": "Get Medicines by Category",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/medicines/category/ANTIBIOTIC"
+              }
+            },
+            {
+              "name": "Search Medicines",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/medicines/search?name=para"
+              }
+            },
+            {
+              "name": "Get Low Stock Medicines",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/medicines/low-stock"
+              }
+            },
+            {
+              "name": "Update Medicine",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8084/api/pharmacy/medicines/1",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Paracetamol\",\n  \"description\": \"Updated description\",\n  \"manufacturer\": \"PharmaCorp\",\n  \"category\": \"ANALGESIC\",\n  \"dosageForm\": \"Tablet\",\n  \"strength\": \"500mg\",\n  \"price\": 5500,\n  \"stockQuantity\": 125,\n  \"reorderLevel\": 20,\n  \"expiryDate\": \"2027-12-31\",\n  \"requiresPrescription\": false,\n  \"storageConditions\": \"Store at room temperature\",\n  \"sideEffects\": \"Nausea, allergic reactions\"\n}"
+                }
+              }
+            },
+            {
+              "name": "Update Stock",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8084/api/pharmacy/medicines/1/stock",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity\": 50,\n  \"operation\": \"ADD\"\n}"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "Create Order",
+              "request": {
+                "method": "POST",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8084/api/pharmacy/orders",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prescriptionNumber\": \"RX-A1B2C3D4\",\n  \"patientId\": 2,\n  \"pharmacistId\": 3,\n  \"notes\": \"Patient needs medication urgently\",\n  \"items\": [\n    {\n      \"medicineId\": 1,\n      \"quantity\": 15,\n      \"instructions\": \"Take 1 tablet 3 times daily after meals\"\n    },\n    {\n      \"medicineId\": 3,\n      \"quantity\": 7,\n      \"instructions\": \"Take 1 tablet once daily in the morning\"\n    }\n  ]\n}"
+                }
+              }
+            },
+            {
+              "name": "Get Order by ID",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/orders/1"
+              }
+            },
+            {
+              "name": "Get Order by Number",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/orders/number/ORD-X1Y2Z3W4"
+              }
+            },
+            {
+              "name": "Get Patient Orders",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/orders/patient/2"
+              }
+            },
+            {
+              "name": "Get Pharmacist Orders",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/orders/pharmacist/3"
+              }
+            },
+            {
+              "name": "Get Orders by Status",
+              "request": {
+                "method": "GET",
+                "url": "http://localhost:8084/api/pharmacy/orders/status/PENDING"
+              }
+            },
+            {
+              "name": "Update Order Status",
+              "request": {
+                "method": "PUT",
+                "header": [{"key": "Content-Type", "value": "application/json"}],
+                "url": "http://localhost:8084/api/pharmacy/orders/1/status",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"DISPENSED\",\n  \"pharmacistNotes\": \"Medication dispensed to patient\"\n}"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Payment Service",
+      "item": [
+        {
+          "name": "Create Payment for Appointment",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8086/api/payments",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patientId\": 2,\n  \"paymentType\": \"APPOINTMENT\",\n  \"referenceId\": 1,\n  \"referenceNumber\": \"APT-12345\",\n  \"amount\": 150000,\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"description\": \"Consultation fee with Dr. Ahmad\",\n  \"notes\": \"Regular checkup appointment\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Payment for Pharmacy Order",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8086/api/payments",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"patientId\": 2,\n  \"paymentType\": \"PHARMACY_ORDER\",\n  \"referenceId\": 1,\n  \"referenceNumber\": \"ORD-X1Y2Z3W4\",\n  \"amount\": 131000,\n  \"paymentMethod\": \"E_WALLET\",\n  \"description\": \"Medication payment\",\n  \"notes\": \"Prescription order payment\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get Payment by ID",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8086/api/payments/1"
+          }
+        },
+        {
+          "name": "Get Payment by Number",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8086/api/payments/number/PAY-A1B2C3D4"
+          }
+        },
+        {
+          "name": "Get Patient Payments",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8086/api/payments/patient/2"
+          }
+        },
+        {
+          "name": "Get Payments by Status",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8086/api/payments/status/COMPLETED"
+          }
+        },
+        {
+          "name": "Get Payments by Type",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8086/api/payments/type/APPOINTMENT"
+          }
+        },
+        {
+          "name": "Process Payment",
+          "request": {
+            "method": "POST",
+            "url": "http://localhost:8086/api/payments/1/process"
+          }
+        },
+        {
+          "name": "Update Payment Status",
+          "request": {
+            "method": "PUT",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8086/api/payments/1/status",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"COMPLETED\",\n  \"notes\": \"Payment verified manually\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Refund Payment",
+          "request": {
+            "method": "POST",
+            "header": [{"key": "Content-Type", "value": "application/json"}],
+            "url": "http://localhost:8086/api/payments/1/refund",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"Appointment cancelled by doctor\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics Service",
+      "item": [
+        {
+          "name": "Get Dashboard Summary",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8085/api/analytics/dashboard"
+          }
+        },
+        {
+          "name": "Get User Statistics",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8085/api/analytics/users"
+          }
+        },
+        {
+          "name": "Get Appointment Statistics",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8085/api/analytics/appointments"
+          }
+        },
+        {
+          "name": "Get Payment Statistics",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8085/api/analytics/payments"
+          }
+        },
+        {
+          "name": "Get Pharmacy Statistics",
+          "request": {
+            "method": "GET",
+            "url": "http://localhost:8085/api/analytics/pharmacy"
+          }
+        }
+      ]
     }
   ]
 }

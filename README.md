@@ -5,24 +5,69 @@ MediTrack adalah platform healthcare digital berbasis microservices yang menghub
 
 ## 🚀 Quick Start
 
+**🤖 Automated Setup (Recommended)**: See [AUTOMATION_SCRIPTS.md](AUTOMATION_SCRIPTS.md)
+
+### One-Command Setup
+
 ```bash
-# 1. Start infrastructure
-docker-compose up -d
-
-# 2. Build project
-mvn clean install -DskipTests
-
-# 3. Start Service Registry
-cd service-registry && mvn spring-boot:run
-
-# 4. Start User Service (new terminal)
-cd user-service && mvn spring-boot:run
-
-# 5. Test API
-curl http://localhost:8081/api/users/role/DOCTOR
+# Start everything automatically
+./start-all-services.sh
 ```
 
-📖 **Detailed Guide**: See [QUICK_START.md](QUICK_START.md)
+This will automatically:
+1. Check prerequisites
+2. Start Docker containers
+3. Build the project
+4. Start all 7 microservices
+5. Verify everything is running
+
+**Total time**: ~5-10 minutes (first run)
+
+### Manual Setup
+
+**For detailed manual setup, see [LOCAL_SETUP_GUIDE.md](LOCAL_SETUP_GUIDE.md)**
+
+```bash
+# 1. Check prerequisites
+./check-prerequisites.sh
+
+# 2. Start infrastructure
+docker-compose up -d
+
+# 3. Build project
+mvn clean install -DskipTests
+
+# 4. Start Service Registry (Terminal 1)
+cd service-registry && mvn spring-boot:run
+
+# 5. Start other services (in separate terminals)
+cd user-service && mvn spring-boot:run
+cd appointment-service && mvn spring-boot:run
+cd ehr-service && mvn spring-boot:run
+cd pharmacy-service && mvn spring-boot:run
+cd payment-service && mvn spring-boot:run
+cd analytics-service && mvn spring-boot:run
+
+# 6. Verify all services
+./verify-services.sh
+```
+
+### Verify Services
+
+Visit Eureka Dashboard: http://localhost:8761
+
+You should see all 7 services registered!
+
+### Stop Services
+
+```bash
+# Stop all services
+./stop-all-services.sh
+```
+
+📖 **Automation Guide**: [AUTOMATION_SCRIPTS.md](AUTOMATION_SCRIPTS.md)  
+📖 **Complete Setup Guide**: [LOCAL_SETUP_GUIDE.md](LOCAL_SETUP_GUIDE.md)  
+📖 **Quick Reference**: [QUICK_START.md](QUICK_START.md)
 
 ## Technology Stack
 - Java 21
@@ -118,16 +163,62 @@ meditrack/
 
 ## Documentation
 
-- 📖 [Quick Start Guide](QUICK_START.md) - Get started in 5 minutes
-- 📖 [Implementation Guide](IMPLEMENTATION.md) - Detailed implementation
-- 📖 [Architecture Documentation](ARCHITECTURE.md) - System architecture
-- 📁 [Laporan 01](laporan-01/) - Design Thinking & Architecture Selection
-- 📁 [Laporan 02](laporan-02/) - System Decomposition & Modeling
-- 📁 [Laporan 03](laporan-03/) - Architecture Visualization
+### Main Documentation
+- 📖 [README.md](README.md) - Project overview
+- 🤖 [AUTOMATION_SCRIPTS.md](AUTOMATION_SCRIPTS.md) - **Automation scripts guide** ⭐
+- 🚀 [LOCAL_SETUP_GUIDE.md](LOCAL_SETUP_GUIDE.md) - Complete manual setup guide
+- 📖 [QUICK_START.md](QUICK_START.md) - Quick start guide
+- 📖 [ARCHITECTURE.md](ARCHITECTURE.md) - Architecture details
+- 📖 [IMPLEMENTATION.md](IMPLEMENTATION.md) - Implementation guide
+- 📖 [IMPLEMENTATION_STATUS.md](IMPLEMENTATION_STATUS.md) - Current status
+- 📖 [PROJECT_COMPLETE.md](PROJECT_COMPLETE.md) - Project completion summary
+
+### Setup Scripts
+- 🤖 [start-all-services.sh](start-all-services.sh) - **Start all services automatically** ⭐
+- 🛑 [stop-all-services.sh](stop-all-services.sh) - Stop all services
+- 🔄 [restart-all-services.sh](restart-all-services.sh) - Restart all services
+- 📋 [view-logs.sh](view-logs.sh) - View service logs interactively
+- 🔧 [check-prerequisites.sh](check-prerequisites.sh) - Check system requirements
+- ✅ [verify-services.sh](verify-services.sh) - Verify all services are running
+- 🧪 [test-integration.sh](test-integration.sh) - Integration test script
+
+### Service Testing Guides
+- 📖 [APPOINTMENT_SERVICE_GUIDE.md](APPOINTMENT_SERVICE_GUIDE.md) - Appointment testing
+- 📖 [EHR_SERVICE_GUIDE.md](EHR_SERVICE_GUIDE.md) - EHR testing
+- 📖 [PHARMACY_SERVICE_GUIDE.md](PHARMACY_SERVICE_GUIDE.md) - Pharmacy testing
+- 📖 [PAYMENT_SERVICE_GUIDE.md](PAYMENT_SERVICE_GUIDE.md) - Payment testing
+- 📖 [ANALYTICS_SERVICE_GUIDE.md](ANALYTICS_SERVICE_GUIDE.md) - Analytics testing
+
+### API Testing
+- 📖 [POSTMAN_COLLECTION_GUIDE.md](POSTMAN_COLLECTION_GUIDE.md) - Postman collection guide
+- 📦 [postman-collection.json](postman-collection.json) - Complete API collection (61 endpoints)
+
+### Reports (Indonesian)
+- 📁 [laporan-01/](laporan-01/) - Design Thinking & Architecture Selection
+- 📁 [laporan-02/](laporan-02/) - System Decomposition & Modeling
+- 📁 [laporan-03/](laporan-03/) - Architecture Visualization
 
 ## API Testing
 
-Import `postman-collection.json` to Postman or use cURL:
+### Postman Collection
+
+Import `postman-collection.json` untuk testing lengkap semua API endpoints.
+
+**Collection includes**:
+- 61 API endpoints
+- 7 microservices
+- Complete request examples
+- Sample data for testing
+
+**Quick Import**:
+1. Open Postman
+2. Click Import
+3. Select `postman-collection.json`
+4. Start testing!
+
+📖 **Detailed Guide**: See [POSTMAN_COLLECTION_GUIDE.md](POSTMAN_COLLECTION_GUIDE.md)
+
+### Sample cURL Commands
 
 ```bash
 # Register a doctor
@@ -146,6 +237,21 @@ curl -X POST http://localhost:8081/api/users/register \
 curl -X POST http://localhost:8081/api/users/login \
   -H "Content-Type: application/json" \
   -d '{"email":"doctor@test.com","password":"password"}'
+
+# Book appointment
+curl -X POST http://localhost:8082/api/appointments \
+  -H "Content-Type: application/json" \
+  -d '{
+    "patientId": 2,
+    "doctorId": 1,
+    "appointmentDateTime": "2026-04-01T10:00:00",
+    "durationMinutes": 30,
+    "type": "CONSULTATION",
+    "reasonForVisit": "Regular checkup"
+  }'
+
+# Get analytics dashboard
+curl http://localhost:8085/api/analytics/dashboard
 
 # List all doctors
 curl http://localhost:8081/api/users/role/DOCTOR
